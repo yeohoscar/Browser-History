@@ -9,51 +9,51 @@ public class BrowserHistory {
         backHistory = new Stack<String>();
         foreHistory = new Stack<String>();
         backHistory.push(homepage);
+        currentWebsite();
     }
 
     public void visit(String link) {
-
         foreHistory.clear();
         backHistory.push(link);
         System.out.println("You are currently in " + link);
     }
 
-    public String back(int steps) {
+    public void back(int steps) {
         for (int i = 0; i < steps; i++) {
             if (backHistory.size() == 1) {
                 break;
             }
             foreHistory.push(backHistory.pop());
         }
-        return backHistory.peek();
+        currentWebsite();
     }
 
-    public String forward(int steps) {
+    public void forward(int steps) {
         for (int i = 0; i < steps; i++) {
             if (foreHistory.isEmpty()) {
                 break;
             }
             backHistory.push(foreHistory.pop());
         }
-        return backHistory.peek();
+        currentWebsite();
     }
 
-    public String back() {
+    public void back() {
         if (backHistory.size() == 1) {
             System.out.println("No links behind");
-            return backHistory.peek();
+            currentWebsite();
         }
         foreHistory.push(backHistory.pop());
-        return backHistory.peek();
+        currentWebsite();
     }
 
-    public String forward() {
+    public void forward() {
         if (foreHistory.isEmpty()) {
             System.out.println("No links forward");
-            return backHistory.peek();
+            currentWebsite();
         }
         backHistory.push(foreHistory.pop());
-        return backHistory.peek();
+        currentWebsite();
     }
 
     @Override
@@ -63,5 +63,9 @@ public class BrowserHistory {
             sb.append(s).append("\n");
         }
         return sb.toString();
+    }
+
+    private void currentWebsite() {
+        System.out.println("You are currently in " + backHistory.peek());
     }
 }
